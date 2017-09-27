@@ -34,11 +34,11 @@ fn sync_song() {
 fn sync_song() {}
 
 fn main() {
-    let id = match std::env::args().skip(1).next() {
+    let id = match std::env::args().nth(1) {
         Some(id) => id,
         None => {
             eprintln!("Must pass song id as argument");
-            std::process::exit(1);
+            std::process::exit(1)
         }
     };
 
@@ -55,7 +55,7 @@ fn main() {
             std::process::exit(1);
         });
 
-    if segments.len() == 0 {
+    if segments.is_empty() {
         pc::endwin();
         eprintln!("No data, check if `SPOTIFY_OAUTH` is expired");
         std::process::exit(1);
@@ -76,7 +76,7 @@ fn main() {
 
         for (i, pitch) in segment.pitches.iter().enumerate() {
             let row = wave_gen::gen_row((*pitch * 10f32) as u16);
-            wave_gen::draw_row(&window, row, (i + 1) as i32 + yoffset, lines);
+            wave_gen::draw_row(&window, &row, (i + 1) as i32 + yoffset, lines);
         }
         std::thread::sleep(std::time::Duration::from_millis(
             (segment.duration * 1000f64) as u64,

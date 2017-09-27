@@ -1,10 +1,10 @@
 use pancurses as pc;
 
-
 const TOP_BAR: &'static [char] = &['⣀', '⣤', '⣶', '⣿'];
 const LOWER_BAR: &'static [char] = &['⠉', '⠛', '⠿', '⣿'];
 
-pub fn gen_row<'a>(value: u16) -> Vec<char> {
+
+pub fn gen_row(value: u16) -> Vec<char> {
     let value = value as usize;
     // TODO: Implement with capacity
     let mut out = Vec::new();
@@ -40,7 +40,7 @@ pub fn gen_row<'a>(value: u16) -> Vec<char> {
     out
 }
 
-pub fn draw_row(window: &pc::Window, row: Vec<char>, column: i32, lines: i32) {
+pub fn draw_row(window: &pc::Window, row: &[char], column: i32, lines: i32) {
     let axis = lines / 2;
     // How far from the horizontal axis to start
     let offset = (row.len() / 2) as i32;
